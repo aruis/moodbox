@@ -16,6 +16,7 @@
 		830A40DF29BF67AD0014C75E /* moodboxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40DE29BF67AD0014C75E /* moodboxTests.swift */; };
 		830A40E929BF67AD0014C75E /* moodboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40E829BF67AD0014C75E /* moodboxUITests.swift */; };
 		830A40EB29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */; };
+		830A40F929BF68AF0014C75E /* CoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40F829BF68AF0014C75E /* CoinView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		830A40E429BF67AD0014C75E /* moodboxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = moodboxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		830A40E829BF67AD0014C75E /* moodboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodboxUITests.swift; sourceTree = "<group>"; };
 		830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		830A40F829BF68AF0014C75E /* CoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		830A40C629BF67AC0014C75E /* moodbox */ = {
 			isa = PBXGroup;
 			children = (
+				830A40F729BF687F0014C75E /* View */,
 				830A40C729BF67AC0014C75E /* moodboxApp.swift */,
 				830A40C929BF67AC0014C75E /* Persistence.swift */,
 				830A40CE29BF67AC0014C75E /* ContentView.swift */,
@@ -133,6 +136,14 @@
 				830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */,
 			);
 			path = moodboxUITests;
+			sourceTree = "<group>";
+		};
+		830A40F729BF687F0014C75E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				830A40F829BF68AF0014C75E /* CoinView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -265,6 +276,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				830A40F929BF68AF0014C75E /* CoinView.swift in Sources */,
 				830A40C829BF67AC0014C75E /* moodboxApp.swift in Sources */,
 				830A40CA29BF67AC0014C75E /* Persistence.swift in Sources */,
 				830A40CF29BF67AC0014C75E /* ContentView.swift in Sources */,
