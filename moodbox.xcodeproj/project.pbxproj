@@ -17,6 +17,7 @@
 		830A40E929BF67AD0014C75E /* moodboxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40E829BF67AD0014C75E /* moodboxUITests.swift */; };
 		830A40EB29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */; };
 		830A40F929BF68AF0014C75E /* CoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40F829BF68AF0014C75E /* CoinView.swift */; };
+		839685B929C0B02E00A0AAE2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839685B829C0B02E00A0AAE2 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		830A40E829BF67AD0014C75E /* moodboxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodboxUITests.swift; sourceTree = "<group>"; };
 		830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		830A40F829BF68AF0014C75E /* CoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinView.swift; sourceTree = "<group>"; };
+		839685B829C0B02E00A0AAE2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				830A40F829BF68AF0014C75E /* CoinView.swift */,
+				839685B829C0B02E00A0AAE2 /* HomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				830A40F929BF68AF0014C75E /* CoinView.swift in Sources */,
 				830A40C829BF67AC0014C75E /* moodboxApp.swift in Sources */,
 				830A40CA29BF67AC0014C75E /* Persistence.swift in Sources */,
+				839685B929C0B02E00A0AAE2 /* HomeView.swift in Sources */,
 				830A40CF29BF67AC0014C75E /* ContentView.swift in Sources */,
 				830A40CD29BF67AC0014C75E /* moodbox.xcdatamodeld in Sources */,
 			);
