@@ -9,10 +9,10 @@ import SwiftUI
 
 struct CoinView: View {
     
-    @State private var isA = true
+    @State private var isA1 = true
+    @State private var isA2 = true
     
     var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
         
         ZStack{
             
@@ -23,11 +23,10 @@ struct CoinView: View {
                         .font(.system(size: 200))
                 })
                 .rotation3DEffect(
-                    .degrees(isA ? 0 : 180),
+                    .degrees(isA1 ? 0 : 180),
                     axis: (0,1,0)
                 )
-                .opacity(isA ? 1:0)
-                .zIndex(isA ? 0:1)
+                .zIndex(isA2 ? 0:1)
             
             Circle()
                 .foregroundColor(Color("happy"))
@@ -36,18 +35,20 @@ struct CoinView: View {
                         .font(.system(size: 200))
                 })
                 .rotation3DEffect(
-                    .degrees(isA ? 0 : 180),
+                    .degrees(isA1 ? 0 : 180),
                     axis: (0,1,0)
                 )
-                .opacity(isA ? 0:1)
-                .zIndex(isA ? 1:0)
+                .zIndex(isA2 ? 1:0)
             
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 1),{
-                isA.toggle()
+                isA1.toggle()
+            })
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                isA2.toggle()
             })
         }
-       
+        
     }
 }
 
