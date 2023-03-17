@@ -12,7 +12,8 @@ struct CoinView: View {
     var coinTransition: Namespace.ID
     
     
-    @State private var isA1 = true
+    @Binding var isHappy:Bool
+    
     @State private var isA2 = true
     
     @State private var isShow = false
@@ -38,7 +39,7 @@ struct CoinView: View {
                 Text("😕")
                     .font(.system(size: 200))
                     .rotation3DEffect(
-                        .degrees(isA1 ? 0 : 180),
+                        .degrees(isHappy ? 0 : 180),
                         axis: (0,1,0)
                     )
                     .zIndex(isA2 ? 1:3)
@@ -48,7 +49,7 @@ struct CoinView: View {
             Circle()
                 .foregroundColor(Color("happy"))
                 .rotation3DEffect(
-                    .degrees(isA1 ? 0 : 180),
+                    .degrees(isHappy ? 0 : 180),
                     axis: (0,1,0)
                 )
                 .zIndex(2)
@@ -59,7 +60,7 @@ struct CoinView: View {
                 Text("😃")
                     .font(.system(size: 200))
                     .rotation3DEffect(
-                        .degrees(isA1 ? 0 : 180),
+                        .degrees(isHappy ? 0 : 180),
                         axis: (0,1,0)
                     )
                     
@@ -71,14 +72,14 @@ struct CoinView: View {
             
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 1),{
-                isA1.toggle()
+                isHappy.toggle()
             })
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
                 isA2.toggle()
             })
         }.onAppear{
 //            isShow = true
-            withAnimation(.easeInOut(duration: 0.5).delay(0.1),{
+            withAnimation(.easeIn(duration: 0.5).delay(0.1),{
                 isShow = true
             })
         }
@@ -90,7 +91,7 @@ struct CoinView_Previews: PreviewProvider {
     
     static var previews: some View {
         let namespace = Namespace().wrappedValue
-        CoinView(coinTransition:namespace)
+        CoinView(coinTransition:namespace,isHappy: .constant(true))
             .background(Color(UIColor.systemGray))
     }
 }
