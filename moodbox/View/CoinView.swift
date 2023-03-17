@@ -9,36 +9,65 @@ import SwiftUI
 
 struct CoinView: View {
     
+    var coinTransition: Namespace.ID
+    
+    
     @State private var isA1 = true
     @State private var isA2 = true
+    
+    @State private var isShow = false
     
     var body: some View {
         
         ZStack{
             
-            Circle()
-                .foregroundColor(Color("sad"))
-                .overlay(content: {
-                    Text("😕")
-                        .font(.system(size: 200))
-                })
-                .rotation3DEffect(
-                    .degrees(isA1 ? 0 : 180),
-                    axis: (0,1,0)
-                )
-                .zIndex(isA2 ? 0:1)
+//            Circle()
+//                .foregroundColor(Color("sad"))
+//                .overlay(content: {
+//                    Text("😕")
+//                        .font(.system(size: 200))
+//                })
+//                .rotation3DEffect(
+//                    .degrees(isA1 ? 0 : 180),
+//                    axis: (0,1,0)
+//                )
+//                .zIndex(isA2 ? 0:1)
+//                .matchedGeometryEffect(id: "circle", in: coinTransition)
             
+            if isShow {
+                Text("😕")
+                    .font(.system(size: 200))
+                    .rotation3DEffect(
+                        .degrees(isA1 ? 0 : 180),
+                        axis: (0,1,0)
+                    )
+                    .zIndex(isA2 ? 1:3)
+            }
+
+     
             Circle()
                 .foregroundColor(Color("happy"))
-                .overlay(content: {
-                    Text("😃")
-                        .font(.system(size: 200))
-                })
                 .rotation3DEffect(
                     .degrees(isA1 ? 0 : 180),
                     axis: (0,1,0)
                 )
-                .zIndex(isA2 ? 1:0)
+                .zIndex(2)
+                .matchedGeometryEffect(id: "circle", in: coinTransition)
+//                .zIndex(isA2 ? 1:0)
+            
+            if isShow {
+                Text("😃")
+                    .font(.system(size: 200))
+                    .rotation3DEffect(
+                        .degrees(isA1 ? 0 : 180),
+                        axis: (0,1,0)
+                    )
+                    
+                    .zIndex(isA2 ? 3:1)
+            }
+           
+            
+            
             
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 1),{
@@ -47,14 +76,21 @@ struct CoinView: View {
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
                 isA2.toggle()
             })
+        }.onAppear{
+//            isShow = true
+            withAnimation(.easeInOut(duration: 0.5).delay(0.1),{
+                isShow = true
+            })
         }
         
     }
 }
 
 struct CoinView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        CoinView()
+        let namespace = Namespace().wrappedValue
+        CoinView(coinTransition:namespace)
             .background(Color(UIColor.systemGray))
     }
 }

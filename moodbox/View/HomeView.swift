@@ -21,10 +21,9 @@ struct HomeView: View {
                     .overlay(content: {
                         
                         VStack(spacing:20) {
-                            CoinView()
+                            CoinView(coinTransition:coinTransition)
                                 .frame(width: size.width/3*2)
-                                
-                            
+                                                            
                             Circle()
                                 .fill(.green)
                                 .frame(width: 60)
@@ -42,6 +41,7 @@ struct HomeView: View {
                                 }
                         }
                     })
+//                    .transition(AnyTransition.slide)
                 
             }
             
