@@ -5,3 +5,4 @@
 
 * Day 1 ,https://www.bilibili.com/video/BV1Bx4y1N7Fy/
 * Day 2 ,https://www.bilibili.com/video/BV1ck4y1878c/
+* Day 3 ,https://www.bilibili.com/video/BV1dL411R72j/
