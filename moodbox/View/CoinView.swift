@@ -43,6 +43,7 @@ struct CoinView: View {
                         axis: (0,1,0)
                     )
                     .zIndex(isA2 ? 1:3)
+//                    .matchedGeometryEffect(id: "sad0", in: coinTransition)
             }
 
      
@@ -63,8 +64,8 @@ struct CoinView: View {
                         .degrees(isHappy ? 0 : 180),
                         axis: (0,1,0)
                     )
-                    
                     .zIndex(isA2 ? 3:1)
+//                    .matchedGeometryEffect(id: "happy0", in: coinTransition)
             }
            
             

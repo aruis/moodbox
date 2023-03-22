@@ -13,7 +13,7 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
+        for _ in 0..<3 {
             let newItem = Record(context: viewContext)
             newItem.create = Date()
             newItem.happy_type = 1
