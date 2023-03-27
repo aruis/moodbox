@@ -12,7 +12,7 @@ struct CoinView: View {
     var coinTransition: Namespace.ID
     
     
-    @Binding var isHappy:Bool
+    @Binding var happyType:Int16
     
     @State private var isA2 = true
     
@@ -39,7 +39,7 @@ struct CoinView: View {
                 Text("😕")
                     .font(.system(size: 200))
                     .rotation3DEffect(
-                        .degrees(isHappy ? 0 : 180),
+                        .degrees(happyType == 1 ? 0 : 180),
                         axis: (0,1,0)
                     )
                     .zIndex(isA2 ? 1:3)
@@ -50,7 +50,7 @@ struct CoinView: View {
             Circle()
                 .foregroundColor(Color("happy"))
                 .rotation3DEffect(
-                    .degrees(isHappy ? 0 : 180),
+                    .degrees(happyType == 1 ? 0 : 180),
                     axis: (0,1,0)
                 )
                 .zIndex(2)
@@ -61,7 +61,7 @@ struct CoinView: View {
                 Text("😃")
                     .font(.system(size: 200))
                     .rotation3DEffect(
-                        .degrees(isHappy ? 0 : 180),
+                        .degrees(happyType == 1 ? 0 : 180),
                         axis: (0,1,0)
                     )
                     .zIndex(isA2 ? 3:1)
@@ -73,7 +73,7 @@ struct CoinView: View {
             
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 1),{
-                isHappy.toggle()
+                happyType = (happyType == 1 ? 0 : 1)
             })
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
                 isA2.toggle()
@@ -92,7 +92,7 @@ struct CoinView_Previews: PreviewProvider {
     
     static var previews: some View {
         let namespace = Namespace().wrappedValue
-        CoinView(coinTransition:namespace,isHappy: .constant(true))
+        CoinView(coinTransition:namespace,happyType:.constant(1))
             .background(Color(UIColor.systemGray))
     }
 }

@@ -18,7 +18,9 @@ struct HomeView: View {
     
     
     @State private var showCoin = false
-    @State private var isHappy = true
+//    @State private var isHappy = true
+    
+    @ObservedObject private var selectItem:RecordViewModel = RecordViewModel()
     
     @Namespace private var coinTransition
     
@@ -30,38 +32,7 @@ struct HomeView: View {
                     
                     List {
                         ForEach(records) { item in
-                            
-                                                        let index = records.firstIndex(of: item)!
-                            
-                            //                            print(index)
-                            
-                            HStack{
-                                
-                                
-                                
-                                Text(item.happy_type == 1 ?"😃" : "😕")
-                                    .font(.system(size: 55))
-                                
-                                
-                                
-                                Text(item.create, formatter: itemFormatter)
-                                    .font(.title2)
-                                
-                            }
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(.init(top: 0,
-                                                 leading: 25,
-                                                 bottom: 0,
-                                                 trailing: 0))
-                            
-                            if index < records.count - 1 {
-                                Color.gray
-                                    .frame(width: 1,height: 60)
-                                    .offset(x:33)
-                            }
-                            
-                            
-                            
+                            itemInList(item: item,size: size)
                         }
                         //                        .onDelete(perform: deleteItems)
                     }
@@ -69,28 +40,17 @@ struct HomeView: View {
                     .listRowInsets(EdgeInsets())
                     //                    .listRowSeparator(<#T##visibility: Visibility##Visibility#>)
                     .toolbar {
-#if os(iOS)
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            EditButton()
-                        }
-#endif
                         ToolbarItem {
                             Button(action: {
-                                
                                 records.forEach({
                                     viewContext.delete($0)
-                                    //                                    $0.happy_type
-                                    
-                                    
+
                                 })
                                 
-                                
-                                
+                                                                
                                 do {
                                     try viewContext.save()
                                 } catch {
-                                    // Replace this implementation with code to handle the error appropriately.
-                                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                                     let nsError = error as NSError
                                     fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                                 }
@@ -103,35 +63,7 @@ struct HomeView: View {
                     //                    Text("Select an item")
                     
                     if showCoin {
-                        Color.black
-                            .ignoresSafeArea()
-                            .overlay(content: {
-                                
-                                VStack(alignment: .center, spacing:20) {
-                                    CoinView(coinTransition:coinTransition,isHappy: $isHappy)
-                                        .frame(width: size.width/3*2)
-                                    
-                                    Circle()
-                                        .fill(.green)
-                                        .frame(width: 60)
-                                        .overlay(content: {
-                                            Image(systemName: "checkmark")
-                                                .font(.largeTitle)
-                                                .foregroundColor(.white)
-                                        })
-                                        .onTapGesture {
-                                            addItem(happyType: isHappy ? 1 : 0 )
-                                            
-                                            withAnimation(.default){
-                                                showCoin = false
-                                            }
-                                            
-                                        }
-                                    //                                .transition(.slide)
-                                }
-                            })
-                        //                    .transition(AnyTransition.slide)
-                        
+                        addIcon(size: size)
                     }
                 }
                 
@@ -144,37 +76,137 @@ struct HomeView: View {
         }
         .overlay(alignment: .bottomTrailing, content: {
             if !showCoin {
-                VStack {
-                    Circle()
-                        .fill(.yellow)
-                        .frame(width: 60,height: 60)
-                        .overlay(content: {
-                            Image(systemName: "plus")
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                        })
-                        .matchedGeometryEffect(id: "circle", in: coinTransition)
-                        .onTapGesture {
-                            withAnimation(.default){
-                                showCoin = true
-                            }
-                            
-                        }
-                }
-                .padding(.bottom,30)
-                .padding(.trailing,45)
+                pickCoin()
             }
             
         })
     }
     
-    private func addItem(happyType:Int16) {
+    @ViewBuilder
+    func itemInList(item:Record,size:CGSize)-> some View{
+        
+        let index = records.firstIndex(of: item)!
+                
+        HStack{
+            Text(item.happy_type == 1 ?"😃" : "😕")
+                .font(.system(size: 55))
+                .overlay(alignment: .center , content: {
+                    if index < records.count - 1 {
+                        Color.gray
+                            .frame(width: 1,height: 50)
+                            .offset(y:64)
+                    }
+                })
+            
+            HStack(alignment:.firstTextBaseline){
+                Text(item.create, formatter: itemFormatter)
+                    .font(.title2)
+                
+                Button{
+                    selectItem.setRecord(record: item)
+                    showCoin = true
+                }label: {
+                    Image(systemName: "square.and.pencil")
+                        .font(.title)
+                        
+                }
+                .buttonStyle(.borderless)
+            }
+           
+            
+        }
+        
+        
+        
+            .listRowSeparator(.hidden)
+            .listRowInsets(.init(top: 0,
+                                 leading: 25,
+                                 bottom: 60,
+                                 trailing: 0))
+        
+       
+        
+    }
+    
+    @ViewBuilder
+    func addIcon(size:CGSize)-> some View{
+        Color.black
+            .ignoresSafeArea()
+            .overlay(content: {
+                
+                VStack(alignment: .center, spacing:20) {
+                    CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
+                        .frame(width: size.width/3*2)
+                    
+//                    if let selectItem {
+                        TextEditor(text: $selectItem.content)
+//                    }
+                    
+                    Circle()
+                        .fill(.green)
+                        .frame(width: 60)
+                        .overlay(content: {
+                            Image(systemName: "checkmark")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                        })
+                        .onTapGesture {
+                            addItem()
+                            
+                            withAnimation(.default){
+                                showCoin = false
+                            }
+                            
+                        }
+                    //                                .transition(.slide)
+                }
+            })
+            .onTapGesture {
+//                showCoin = false
+            }
+            .gesture(DragGesture().onEnded{value in
+                
+                if value.translation.height > 20 {
+                    showCoin = false
+                }
+                
+            })
+    }
+    
+    @ViewBuilder
+    func pickCoin()-> some View{
+        VStack {
+            Circle()
+                .fill(.yellow)
+                .frame(width: 60,height: 60)
+                .overlay(content: {
+                    Image(systemName: "plus")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                })
+                .matchedGeometryEffect(id: "circle", in: coinTransition)
+                .onTapGesture {
+                    withAnimation(.default){
+//                        selectItem = nil
+                        showCoin = true
+                    }
+                    
+                }
+        }
+        .padding(.bottom,30)
+        .padding(.trailing,45)
+
+    }
+    
+    private func addItem() {
         withAnimation {
             let newItem = Record(context: viewContext)
             newItem.create = Date()
-            newItem.happy_type = happyType
+            newItem.happy_type = selectItem.happy_type
+            newItem.content = selectItem.content
             do {
                 try viewContext.save()
+                selectItem.clear()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
