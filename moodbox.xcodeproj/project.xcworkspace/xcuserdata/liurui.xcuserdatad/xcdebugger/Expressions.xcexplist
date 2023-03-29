@@ -3,10 +3,37 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "HomeView.addIcon(size:):HomeView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "selft.selectItem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RecordViewModel.setRecord(record:):RecordViewModel.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "record.happy_type">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in closure #1 in closure #1 in closure #1 in closure #1 in closure #1 in HomeView.body.getter:HomeView.swift">
          <PersistentStrings>
             <PersistentString
                value = "records">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in HomeView.addItem():HomeView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "record.create">
+            </PersistentString>
+            <PersistentString
+               value = "record.isInserted">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

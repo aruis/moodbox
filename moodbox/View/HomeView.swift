@@ -60,13 +60,11 @@ struct HomeView: View {
                             }
                         }
                     }
-                    //                    Text("Select an item")
-                    
-                    if showCoin {
-                        addIcon(size: size)
-                    }
+
                 }
-                
+                .sheet(isPresented: $showCoin){
+                    addIcon(size: size)
+                }
                 
                 
             }
@@ -74,6 +72,7 @@ struct HomeView: View {
             
             //            .ignoresSafeArea()
         }
+       
         .overlay(alignment: .bottomTrailing, content: {
             if !showCoin {
                 pickCoin()
@@ -130,47 +129,54 @@ struct HomeView: View {
     
     @ViewBuilder
     func addIcon(size:CGSize)-> some View{
-        Color.black
-            .ignoresSafeArea()
-            .overlay(content: {
-                
-                VStack(alignment: .center, spacing:20) {
-                    CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
-                        .frame(width: size.width/3*2)
+        NavigationStack {
+            Color.gray
+                .ignoresSafeArea()
+                .overlay(content: {
                     
-//                    if let selectItem {
-                        TextEditor(text: $selectItem.content)
-//                    }
-                    
-                    Circle()
-                        .fill(.green)
-                        .frame(width: 60)
-                        .overlay(content: {
-                            Image(systemName: "checkmark")
-                                .font(.largeTitle)
-                                .foregroundColor(.white)
-                        })
-                        .onTapGesture {
-                            addItem()
-                            
-                            withAnimation(.default){
-                                showCoin = false
+                    VStack(alignment: .center, spacing:25) {
+                        CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
+                            .frame(width: size.width/3*2)
+                        
+
+                            TextEditor(text: $selectItem.content)
+    //                        .padding(10)
+                            .font(.title2)
+                            .frame(width: size.width*0.8,height: size.height * 0.3)
+    //                        .border(Color.black,width: 1)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+    //                        .padding(10)
+                        
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 60)
+                            .overlay(content: {
+                                Image(systemName: "checkmark")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.white)
+                            })
+                            .onTapGesture {
+                                addItem()
+                                
+                                withAnimation(.default){
+                                    showCoin = false
+                                }
+                                
                             }
-                            
-                        }
-                    //                                .transition(.slide)
+                        //                                .transition(.slide)
+                    }
+                })
+                .toolbar{
+                    
+                    Button( role: .destructive){
+                        
+                    }label: {
+                        Image(systemName: "trash")
+                    }
+                    
                 }
-            })
-            .onTapGesture {
-//                showCoin = false
-            }
-            .gesture(DragGesture().onEnded{value in
-                
-                if value.translation.height > 20 {
-                    showCoin = false
-                }
-                
-            })
+               
+        }
     }
     
     @ViewBuilder
@@ -200,10 +206,16 @@ struct HomeView: View {
     
     private func addItem() {
         withAnimation {
-            let newItem = Record(context: viewContext)
-            newItem.create = Date()
-            newItem.happy_type = selectItem.happy_type
-            newItem.content = selectItem.content
+            
+             
+            let record = (selectItem.model != nil) ? selectItem.model! : Record(context: viewContext)
+            
+            if record.isInserted {
+                record.create = Date()
+            }
+//            record.create = Date()
+            record.happy_type = selectItem.happy_type
+            record.content = selectItem.content
             do {
                 try viewContext.save()
                 selectItem.clear()

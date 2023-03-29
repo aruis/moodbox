@@ -21,6 +21,7 @@ struct CoinView: View {
     var body: some View {
         
         ZStack{
+          
             
 //            Circle()
 //                .foregroundColor(Color("sad"))
@@ -66,10 +67,7 @@ struct CoinView: View {
                     )
                     .zIndex(isA2 ? 3:1)
 //                    .matchedGeometryEffect(id: "happy0", in: coinTransition)
-            }
-           
-            
-            
+            }                       
             
         }.onTapGesture {
             withAnimation(.easeInOut(duration: 1),{
@@ -83,6 +81,8 @@ struct CoinView: View {
             withAnimation(.easeIn(duration: 0.5).delay(0.1),{
                 isShow = true
             })
+            
+            isA2 = happyType == 1
         }
         
     }
