@@ -15,7 +15,7 @@ class RecordViewModel:ObservableObject{
     @Published var happy_type: Int16 = 1
     @Published var create: Date = Date()
     @Published var content: String  = ""
-    @Published var image: Data?
+    @Published var image: UIImage = UIImage()
 //    @Published var selectedItem: PhotosPickerItem?
     
     var model:Record?
@@ -27,7 +27,7 @@ class RecordViewModel:ObservableObject{
     func setRecord(record:Record){
         self.happy_type = record.happy_type
         self.create = record.create
-        self.image = record.image        
+//        self.image = record.image
         
         if let content = record.content {
             self.content = content
@@ -39,7 +39,8 @@ class RecordViewModel:ObservableObject{
     func clear(){
         happy_type = 1
         content = ""
-        image = nil
+//        image = nil
+        image = UIImage()
         model = nil
     }
     

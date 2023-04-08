@@ -18,6 +18,7 @@ struct HomeView: View {
     
     
     @State private var showCoin = false
+    @State private var takePhoto = false
     //    @State private var isHappy = true
     
     @ObservedObject private var selectItem:RecordViewModel = RecordViewModel()
@@ -63,7 +64,10 @@ struct HomeView: View {
                     
                 }
                 .sheet(isPresented: $showCoin){
-                    addIcon(size: size)
+                    pickView(size: size)
+                        .fullScreenCover(isPresented: $takePhoto){
+                            ImagePicker(selectedImage: $selectItem.image)
+                        }
                 }
                 
                 
@@ -72,6 +76,7 @@ struct HomeView: View {
             
             //            .ignoresSafeArea()
         }
+        
         
         .overlay(alignment: .bottomTrailing, content: {
             if !showCoin {
@@ -128,7 +133,7 @@ struct HomeView: View {
     }
     
     @ViewBuilder
-    func addIcon(size:CGSize)-> some View{
+    func pickView(size:CGSize)-> some View{
         NavigationStack {
             Color.gray
                 .ignoresSafeArea()
@@ -138,8 +143,16 @@ struct HomeView: View {
                         CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
                             .frame(width: size.width/3*2)
                         
+                        Image(uiImage: selectItem.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight:200)
                         
-                        
+                        Button{
+                            takePhoto = true
+                        }label: {
+                            Image(systemName: "camera")
+                        }
                         
                         TextEditor(text: $selectItem.content)
                         //                        .padding(10)

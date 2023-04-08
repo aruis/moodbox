@@ -19,6 +19,7 @@
 		830A40F929BF68AF0014C75E /* CoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40F829BF68AF0014C75E /* CoinView.swift */; };
 		831F632329CC9BF100449971 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F632229CC9BF100449971 /* RecordViewModel.swift */; };
 		839685B929C0B02E00A0AAE2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839685B829C0B02E00A0AAE2 /* HomeView.swift */; };
+		83C01C6329E1ACF300F96610 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C01C6229E1ACF300F96610 /* ImagePicker.swift */; };
 		83ED353729C4A637005DBD57 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED353629C4A637005DBD57 /* Record.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		830A40F829BF68AF0014C75E /* CoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinView.swift; sourceTree = "<group>"; };
 		831F632229CC9BF100449971 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
 		839685B829C0B02E00A0AAE2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		83C01C6229E1ACF300F96610 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		83ED353629C4A637005DBD57 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +151,7 @@
 		830A40F729BF687F0014C75E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				83C01C6129E1ACD600F96610 /* UIKitBridge */,
 				830A40F829BF68AF0014C75E /* CoinView.swift */,
 				839685B829C0B02E00A0AAE2 /* HomeView.swift */,
 			);
@@ -161,6 +164,14 @@
 				831F632229CC9BF100449971 /* RecordViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		83C01C6129E1ACD600F96610 /* UIKitBridge */ = {
+			isa = PBXGroup;
+			children = (
+				83C01C6229E1ACF300F96610 /* ImagePicker.swift */,
+			);
+			path = UIKitBridge;
 			sourceTree = "<group>";
 		};
 		83ED353529C4A620005DBD57 /* Model */ = {
@@ -304,6 +315,7 @@
 				830A40F929BF68AF0014C75E /* CoinView.swift in Sources */,
 				830A40C829BF67AC0014C75E /* moodboxApp.swift in Sources */,
 				830A40CA29BF67AC0014C75E /* Persistence.swift in Sources */,
+				83C01C6329E1ACF300F96610 /* ImagePicker.swift in Sources */,
 				831F632329CC9BF100449971 /* RecordViewModel.swift in Sources */,
 				839685B929C0B02E00A0AAE2 /* HomeView.swift in Sources */,
 				83ED353729C4A637005DBD57 /* Record.swift in Sources */,
@@ -467,6 +479,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要访问相机";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -505,6 +518,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "需要访问相机";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
