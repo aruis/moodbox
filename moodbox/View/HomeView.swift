@@ -18,7 +18,7 @@ struct HomeView: View {
     
     
     @State private var showCoin = false
-//    @State private var isHappy = true
+    //    @State private var isHappy = true
     
     @ObservedObject private var selectItem:RecordViewModel = RecordViewModel()
     
@@ -44,10 +44,10 @@ struct HomeView: View {
                             Button(action: {
                                 records.forEach({
                                     viewContext.delete($0)
-
+                                    
                                 })
                                 
-                                                                
+                                
                                 do {
                                     try viewContext.save()
                                 } catch {
@@ -60,7 +60,7 @@ struct HomeView: View {
                             }
                         }
                     }
-
+                    
                 }
                 .sheet(isPresented: $showCoin){
                     addIcon(size: size)
@@ -72,10 +72,10 @@ struct HomeView: View {
             
             //            .ignoresSafeArea()
         }
-       
+        
         .overlay(alignment: .bottomTrailing, content: {
             if !showCoin {
-                pickCoin()
+                pickCoinButton()
             }
             
         })
@@ -85,7 +85,7 @@ struct HomeView: View {
     func itemInList(item:Record,size:CGSize)-> some View{
         
         let index = records.firstIndex(of: item)!
-                
+        
         HStack{
             Text(item.happy_type == 1 ?"😃" : "😕")
                 .font(.system(size: 55))
@@ -107,23 +107,23 @@ struct HomeView: View {
                 }label: {
                     Image(systemName: "square.and.pencil")
                         .font(.title)
-                        
+                    
                 }
                 .buttonStyle(.borderless)
             }
-           
+            
             
         }
         
         
         
-            .listRowSeparator(.hidden)
-            .listRowInsets(.init(top: 0,
-                                 leading: 25,
-                                 bottom: 60,
-                                 trailing: 0))
+        .listRowSeparator(.hidden)
+        .listRowInsets(.init(top: 0,
+                             leading: 25,
+                             bottom: 60,
+                             trailing: 0))
         
-       
+        
         
     }
     
@@ -138,14 +138,16 @@ struct HomeView: View {
                         CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
                             .frame(width: size.width/3*2)
                         
-
-                            TextEditor(text: $selectItem.content)
-    //                        .padding(10)
+                        
+                        
+                        
+                        TextEditor(text: $selectItem.content)
+                        //                        .padding(10)
                             .font(.title2)
                             .frame(width: size.width*0.8,height: size.height * 0.3)
-    //                        .border(Color.black,width: 1)
+                        //                        .border(Color.black,width: 1)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
-    //                        .padding(10)
+                        //                        .padding(10)
                         
                         Circle()
                             .fill(.green)
@@ -168,19 +170,27 @@ struct HomeView: View {
                 })
                 .toolbar{
                     
-                    Button( role: .destructive){
-                        
-                    }label: {
-                        Image(systemName: "trash")
+                    if let record = selectItem.model{
+                        Button( role: .destructive){
+                            viewContext.delete(record)
+                            do {
+                                try viewContext.save()
+                            } catch {
+                                let nsError = error as NSError
+                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                            }
+                            showCoin = false
+                        }label: {
+                            Image(systemName: "trash")
+                        }
                     }
-                    
                 }
-               
+            
         }
     }
     
     @ViewBuilder
-    func pickCoin()-> some View{
+    func pickCoinButton()-> some View{
         VStack {
             Circle()
                 .fill(.yellow)
@@ -193,7 +203,7 @@ struct HomeView: View {
                 .matchedGeometryEffect(id: "circle", in: coinTransition)
                 .onTapGesture {
                     withAnimation(.default){
-//                        selectItem = nil
+                        selectItem.clear()
                         showCoin = true
                     }
                     
@@ -201,19 +211,20 @@ struct HomeView: View {
         }
         .padding(.bottom,30)
         .padding(.trailing,45)
-
+        
     }
     
     private func addItem() {
         withAnimation {
             
-             
+            
             let record = (selectItem.model != nil) ? selectItem.model! : Record(context: viewContext)
             
             if record.isInserted {
                 record.create = Date()
+                record.id = UUID().uuidString
             }
-//            record.create = Date()
+            //            record.create = Date()
             record.happy_type = selectItem.happy_type
             record.content = selectItem.content
             do {

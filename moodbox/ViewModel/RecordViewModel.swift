@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import PhotosUI
 
 class RecordViewModel:ObservableObject{
     
@@ -15,6 +16,7 @@ class RecordViewModel:ObservableObject{
     @Published var create: Date = Date()
     @Published var content: String  = ""
     @Published var image: Data?
+//    @Published var selectedItem: PhotosPickerItem?
     
     var model:Record?
  

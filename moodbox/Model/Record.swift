@@ -11,12 +11,10 @@ import CoreData
 
 class Record:NSManagedObject , Identifiable{
     
+    @NSManaged var id: String
     @NSManaged var happy_type: Int16
     @NSManaged var create: Date
     @NSManaged var content: String?
     @NSManaged var image: Data?
     
-    var id:Date{
-         create
-    }
 }
