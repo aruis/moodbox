@@ -15,7 +15,7 @@ class RecordViewModel:ObservableObject{
     @Published var happy_type: Int16 = 1
     @Published var create: Date = Date()
     @Published var content: String  = ""
-    @Published var image: UIImage = UIImage()
+    @Published var image: UIImage? = nil
 //    @Published var selectedItem: PhotosPickerItem?
     
     var model:Record?
@@ -40,7 +40,7 @@ class RecordViewModel:ObservableObject{
         happy_type = 1
         content = ""
 //        image = nil
-        image = UIImage()
+        image = nil
         model = nil
     }
     

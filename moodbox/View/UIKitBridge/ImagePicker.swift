@@ -12,7 +12,7 @@ import SwiftUI
 struct ImagePicker:UIViewControllerRepresentable{
     var sourceType: UIImagePickerController.SourceType = .camera
     
-    @Binding var selectedImage: UIImage
+    @Binding var selectedImage: UIImage?
     
     @Environment(\.dismiss) private var dismiss
     

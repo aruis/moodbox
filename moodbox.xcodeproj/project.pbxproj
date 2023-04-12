@@ -18,6 +18,7 @@
 		830A40EB29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */; };
 		830A40F929BF68AF0014C75E /* CoinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830A40F829BF68AF0014C75E /* CoinView.swift */; };
 		831F632329CC9BF100449971 /* RecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F632229CC9BF100449971 /* RecordViewModel.swift */; };
+		83288D3429E4534700FAFF28 /* CircularButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83288D3329E4534700FAFF28 /* CircularButtonStyle.swift */; };
 		839685B929C0B02E00A0AAE2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839685B829C0B02E00A0AAE2 /* HomeView.swift */; };
 		83C01C6329E1ACF300F96610 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C01C6229E1ACF300F96610 /* ImagePicker.swift */; };
 		83ED353729C4A637005DBD57 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ED353629C4A637005DBD57 /* Record.swift */; };
@@ -56,6 +57,7 @@
 		830A40EA29BF67AD0014C75E /* moodboxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moodboxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		830A40F829BF68AF0014C75E /* CoinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinView.swift; sourceTree = "<group>"; };
 		831F632229CC9BF100449971 /* RecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordViewModel.swift; sourceTree = "<group>"; };
+		83288D3329E4534700FAFF28 /* CircularButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularButtonStyle.swift; sourceTree = "<group>"; };
 		839685B829C0B02E00A0AAE2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		83C01C6229E1ACF300F96610 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		83ED353629C4A637005DBD57 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		830A40F729BF687F0014C75E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				83288D3229E4532700FAFF28 /* help */,
 				83C01C6129E1ACD600F96610 /* UIKitBridge */,
 				830A40F829BF68AF0014C75E /* CoinView.swift */,
 				839685B829C0B02E00A0AAE2 /* HomeView.swift */,
@@ -164,6 +167,14 @@
 				831F632229CC9BF100449971 /* RecordViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		83288D3229E4532700FAFF28 /* help */ = {
+			isa = PBXGroup;
+			children = (
+				83288D3329E4534700FAFF28 /* CircularButtonStyle.swift */,
+			);
+			path = help;
 			sourceTree = "<group>";
 		};
 		83C01C6129E1ACD600F96610 /* UIKitBridge */ = {
@@ -312,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83288D3429E4534700FAFF28 /* CircularButtonStyle.swift in Sources */,
 				830A40F929BF68AF0014C75E /* CoinView.swift in Sources */,
 				830A40C829BF67AC0014C75E /* moodboxApp.swift in Sources */,
 				830A40CA29BF67AC0014C75E /* Persistence.swift in Sources */,

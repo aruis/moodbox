@@ -19,6 +19,8 @@ struct HomeView: View {
     
     @State private var showCoin = false
     @State private var takePhoto = false
+    @State private var listOffset: CGFloat = .zero
+    @State private var isButtonHidden = false
     //    @State private var isHappy = true
     
     @ObservedObject private var selectItem:RecordViewModel = RecordViewModel()
@@ -29,50 +31,65 @@ struct HomeView: View {
         NavigationView {
             GeometryReader{ proxy in
                 let size = proxy.size
-                ZStack{
-                    
-                    List {
-                        ForEach(records) { item in
-                            itemInList(item: item,size: size)
-                        }
-                        //                        .onDelete(perform: deleteItems)
+                List {
+                    ForEach(records) { item in
+                        itemInList(item: item,size: size)
                     }
-                    .listStyle(.plain)
-                    .listRowInsets(EdgeInsets())
-                    //                    .listRowSeparator(<#T##visibility: Visibility##Visibility#>)
-                    .toolbar {
-                        ToolbarItem {
-                            Button(action: {
-                                records.forEach({
-                                    viewContext.delete($0)
-                                    
-                                })
+                }
+                .listStyle(.plain)
+                .listRowInsets(EdgeInsets())
+                .overlay(
+                    GeometryReader { proxy in
+                                       let minY = proxy.frame(in: .global).minY
+                                       let height = proxy.size.height
+                                       let contentHeight = proxy.frame(in: .local).height
+                                       
+                                       let offset = max(minY, -(contentHeight - height))
+                                       Color.clear.preference(key: ViewOffsetKey.self, value: offset)
+                                   }
+                                   .onPreferenceChange(ViewOffsetKey.self) { offset in
+                                       let isHidden = offset < listOffset
+                                       withAnimation {
+                                           isButtonHidden = isHidden
+                                       }
+                                       listOffset = offset
+                                       print("List scrolled with offset: \(listOffset)")
+                                   }
+                )
+                
+                //                    .listRowSeparator(<#T##visibility: Visibility##Visibility#>)
+                .toolbar {
+                    ToolbarItem {
+                        Button(action: {
+                            records.forEach({
+                                viewContext.delete($0)
                                 
-                                
-                                do {
-                                    try viewContext.save()
-                                } catch {
-                                    let nsError = error as NSError
-                                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                                }
-                                
-                            }) {
-                                Label("Clear", systemImage: "trash")
+                            })
+                            
+                            
+                            do {
+                                try viewContext.save()
+                            } catch {
+                                let nsError = error as NSError
+                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                             }
+                            
+                        }) {
+                            Label("Clear", systemImage: "trash")
                         }
                     }
-                    
                 }
                 .sheet(isPresented: $showCoin){
                     pickView(size: size)
                         .fullScreenCover(isPresented: $takePhoto){
                             ImagePicker(selectedImage: $selectItem.image)
+                                .ignoresSafeArea()
                         }
                 }
                 
                 
             }
-            .navigationTitle("心情盒子")
+            .navigationTitle("心情盒子\(records.count)")
             
             //            .ignoresSafeArea()
         }
@@ -80,7 +97,23 @@ struct HomeView: View {
         
         .overlay(alignment: .bottomTrailing, content: {
             if !showCoin {
-                pickCoinButton()
+                
+                Button{
+                    withAnimation(.default){
+                        selectItem.clear()
+                        showCoin = true
+                    }
+                }label: {
+                    Image(systemName: "plus")
+                        .font(.largeTitle)
+                }
+                .buttonStyle(CircularButtonStyle(color: Color.yellow))
+                .padding(.trailing,18)
+                .opacity(isButtonHidden ? 0 : 1)
+    
+                
+                
+                
             }
             
         })
@@ -135,69 +168,77 @@ struct HomeView: View {
     @ViewBuilder
     func pickView(size:CGSize)-> some View{
         NavigationStack {
-            Color.gray
-                .ignoresSafeArea()
-                .overlay(content: {
+            ScrollView{
+                VStack(alignment: .center, spacing:25) {
+                    CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
+                        .frame(width: size.width/3*2)
                     
-                    VStack(alignment: .center, spacing:25) {
-                        CoinView(coinTransition:coinTransition,happyType:$selectItem.happy_type)
-                            .frame(width: size.width/3*2)
-                        
-                        Image(uiImage: selectItem.image)
+                    if let image =  selectItem.image{
+                        Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                            .frame(maxHeight:200)
-                        
-                        Button{
-                            takePhoto = true
-                        }label: {
-                            Image(systemName: "camera")
-                        }
-                        
-                        TextEditor(text: $selectItem.content)
-                        //                        .padding(10)
-                            .font(.title2)
-                            .frame(width: size.width*0.8,height: size.height * 0.3)
-                        //                        .border(Color.black,width: 1)
+                            .frame(height:300)
                             .clipShape(RoundedRectangle(cornerRadius: 15))
-                        //                        .padding(10)
-                        
-                        Circle()
-                            .fill(.green)
-                            .frame(width: 60)
-                            .overlay(content: {
-                                Image(systemName: "checkmark")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.white)
-                            })
-                            .onTapGesture {
-                                addItem()
-                                
-                                withAnimation(.default){
-                                    showCoin = false
-                                }
-                                
-                            }
-                        //                                .transition(.slide)
                     }
-                })
-                .toolbar{
                     
-                    if let record = selectItem.model{
-                        Button( role: .destructive){
-                            viewContext.delete(record)
-                            do {
-                                try viewContext.save()
-                            } catch {
-                                let nsError = error as NSError
-                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                            }
+                    Button{
+                        takePhoto = true
+                    }label: {
+                        Image(systemName: "camera")
+                    }
+                    
+                    TextEditor(text: $selectItem.content)
+                    //                        .padding(10)
+                        .font(.title2)
+                        .frame(width: size.width*0.8,height: size.height * 0.3)
+                        .border(Color.black,width: 1)
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                    //                        .padding(10)
+                    
+                    Button{
+                        addItem()
+                        
+                        withAnimation(.default){
                             showCoin = false
-                        }label: {
-                            Image(systemName: "trash")
                         }
+                    }label: {
+                        Image(systemName: "checkmark")
+                            .font(.largeTitle)
+                    }
+                    .buttonStyle(CircularButtonStyle(color: Color.yellow))
+                    
+                    //                    Circle()
+                    //                        .fill(.green)
+                    //                        .frame(width: 60)
+                    //                        .overlay(content: {
+                    //                            Image(systemName: "checkmark")
+                    //                                .font(.largeTitle)
+                    //                                .foregroundColor(.white)
+                    //                        })
+                    //                        .onTapGesture {
+                    //
+                    //
+                    //                        }
+                    //                                .transition(.slide)
+                }
+            }
+            .toolbar{
+                
+                if let record = selectItem.model{
+                    Button( role: .destructive){
+                        viewContext.delete(record)
+                        do {
+                            try viewContext.save()
+                        } catch {
+                            let nsError = error as NSError
+                            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                        }
+                        showCoin = false
+                    }label: {
+                        Image(systemName: "trash")
                     }
                 }
+            }
             
         }
     }
@@ -276,6 +317,13 @@ private let itemFormatter: DateFormatter = {
     formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
     return formatter
 }()
+
+private struct ViewOffsetKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value += nextValue()
+    }
+}
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
